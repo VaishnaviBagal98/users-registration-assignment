@@ -2,12 +2,14 @@ package com.assignment.com.registration.assignment.service;
 
 import com.assignment.com.registration.assignment.entity.User;
 import com.assignment.com.registration.assignment.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 /**
  * This class holds all type of user registration
+ *
  * @author Vaishnavi Bagal
  * @version 1.0
  */
@@ -34,7 +36,7 @@ public class UserRegistrationService {
 
         log.info("Sending Welcome email");
         userService.sendWelcomeEmail(user);
-        
+
 
         return createduser;
     }

@@ -10,6 +10,7 @@ import java.util.UUID;
 
 /**
  * This Interface responsible for saving email request to database
+ *
  * @author Vaishnavi Bagal
  * @version 1.0
  */

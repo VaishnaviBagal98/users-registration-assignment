@@ -3,11 +3,13 @@ package com.assignment.com.registration.assignment.service;
 import com.assignment.com.registration.assignment.entity.EmailRequest;
 import com.assignment.com.registration.assignment.entity.User;
 import com.assignment.com.registration.assignment.repository.EmailRequestRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  * This class holds all the operation w.r.t Admin user
+ *
  * @author Vaishnavi Bagal
  * @version 1.0
  */

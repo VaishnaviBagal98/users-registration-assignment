@@ -28,6 +28,7 @@ public class VendorUserService implements UserService {
                 .userId(user.getId().toString())
                 .build();
 
+        log.info("Saving email request details for Vendor user");
         emailRequestRepository.save(emailRequest);
     }
 

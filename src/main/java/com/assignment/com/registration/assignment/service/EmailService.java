@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 /**
- * This class is email service implemented to send email to user for notifications.
+ * This service implemented to send email to user for notifications.
  *
  * @author Vaishnavi Bagal
  * @version 1.0

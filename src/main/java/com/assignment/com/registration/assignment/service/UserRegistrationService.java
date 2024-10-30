@@ -32,6 +32,7 @@ public class UserRegistrationService {
             throw new RuntimeException("User Type Not Supported");
         }
 
+        log.info("Sending Welcome email");
         userService.sendWelcomeEmail(user);
         
 

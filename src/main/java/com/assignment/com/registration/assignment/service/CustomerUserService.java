@@ -21,7 +21,6 @@ public class CustomerUserService implements UserService {
 
     @Override
     public void sendWelcomeEmail(User user) {
-        log.info("Inside the CustomerUserService");
         EmailRequest emailRequest = EmailRequest.builder()
                 .to(user.getEmail())
                 .from("vaishnavibagal1998@gmail.com")
@@ -31,7 +30,9 @@ public class CustomerUserService implements UserService {
                 .userId(user.getId().toString())
                 .build();
 
+        log.info("Saving email request details for Customer user");
         emailRequestRepository.save(emailRequest);
+        
     }
 
     @Override

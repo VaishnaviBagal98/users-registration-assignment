@@ -21,7 +21,6 @@ public class AdminUserService implements UserService {
 
     @Override
     public void sendWelcomeEmail(User user) {
-        log.info("Inside the AdminUserService");
         EmailRequest emailRequest = EmailRequest.builder()
                 .to(user.getEmail())
                 .from("vaishnavibagal1998@gmail.com")
@@ -31,6 +30,7 @@ public class AdminUserService implements UserService {
                 .userId(user.getId().toString())
                 .build();
 
+        log.info("Saving email request details for Admin user");
         emailRequestRepository.save(emailRequest);
 
     }

@@ -16,7 +16,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@Slf4j
 public class JwtService {
+
+    log.info("JwtService started");
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 

@@ -1,0 +1,80 @@
+package com.assignment.com.registration.assignment.service;
+
+import com.assignment.com.registration.assignment.entity.EmailRequest;
+import com.assignment.com.registration.assignment.repository.EmailRequestRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.SimpleMailMessage;
+
+import java.util.Collections;
+import java.util.List;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+class EmailServiceTest {
+
+    @InjectMocks
+    private EmailService emailService;
+
+    @Mock
+    private JavaMailSender emailSender;
+
+    @Mock
+    private EmailRequestRepository emailRequestRepository;
+
+    private EmailRequest emailRequest;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        emailRequest = new EmailRequest();
+        emailRequest.setId(1L);
+        emailRequest.setTo("customer@example.com");
+        emailRequest.setSubject("Test Subject");
+        emailRequest.setBody("Test Body");
+        emailRequest.setStatus("PENDING");
+        emailRequest.setRetryCount(0);
+    }
+
+    @Test
+    void testSendMail_Successful() {
+        // Arrange
+        when(emailRequestRepository.findAllEligibleRequest()).thenReturn(Collections.singletonList(emailRequest));
+
+        // Act
+        emailService.sendMail();
+
+        // Assert
+        ArgumentCaptor<SimpleMailMessage> messageCaptor = ArgumentCaptor.forClass(SimpleMailMessage.class);
+        verify(emailRequestRepository).save(emailRequest);
+        verify(emailSender).send(messageCaptor.capture());
+        
+        SimpleMailMessage message = messageCaptor.getValue();
+        assert message.getTo()[0].equals(emailRequest.getTo());
+        assert message.getSubject().equals(emailRequest.getSubject());
+        assert message.getText().equals(emailRequest.getBody());
+        assert emailRequest.getStatus().equals("Successful");
+    }
+
+    @Test
+    void testSendMail_Failure() {
+        // Arrange
+        when(emailRequestRepository.findAllEligibleRequest()).thenReturn(Collections.singletonList(emailRequest));
+        // Simulate an exception when sending the email
+        doThrow(new RuntimeException("Email sending failed")).when(emailSender).send(any(SimpleMailMessage.class));
+
+        // Act
+        emailService.sendMail();
+
+        // Assert
+        verify(emailRequestRepository).save(emailRequest);
+        assert emailRequest.getStatus().equals("FAILED");
+        assert emailRequest.getRetryCount() == 1;  // Assuming retry count increments by 1 on failure
+    }
+}

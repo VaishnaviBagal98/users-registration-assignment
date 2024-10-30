@@ -1,0 +1,51 @@
+package com.assignment.com.registration.assignment.service;
+
+import com.assignment.com.registration.assignment.entity.EmailRequest;
+import com.assignment.com.registration.assignment.entity.User;
+import com.assignment.com.registration.assignment.repository.EmailRequestRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
+
+class VendorUserServiceTest {
+
+    @InjectMocks
+    private VendorUserService vendorUserService;
+
+    @Mock
+    private EmailRequestRepository emailRequestRepository;
+
+    private User user;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        user = new User();
+        user.setId(1L);
+        user.setEmail("vendor@example.com");
+    }
+
+    @Test
+    void testSendWelcomeEmail() {
+        // Act
+        vendorUserService.sendWelcomeEmail(user);
+
+        // Arrange the expected EmailRequest object
+        EmailRequest expectedEmailRequest = EmailRequest.builder()
+                .to(user.getEmail())
+                .from("vaishnavibagal1998@gmail.com")
+                .subject("Registration Successful")
+                .body("You are registered as Vendor")
+                .status("PENDING")
+                .userId(user.getId().toString())
+                .build();
+
+        // Assert that the save method was called with the expected email request
+        verify(emailRequestRepository, times(1)).save(expectedEmailRequest);
+    }
+}

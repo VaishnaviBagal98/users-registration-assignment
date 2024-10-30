@@ -31,15 +31,16 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorized ->{
-                authorized.requestMatchers("/auth/**")
-                    .authenticated().anyRequest()
-                    .permitAll()
-                    .authenticationProvider(authenticationProvider)
-                    .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                    .csrf(AbstractHttpConfigurer::disable);
-                })
-                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManager)
+        http.authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorization -> authorization.requestMatchers("/auth/**")
+            .permitAll()
+            .anyRequest()
+            .authenticated())
+                .sessionManagement(httpSecuritySession -> httpSecuritySession.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+
 
         return http.build();
     }

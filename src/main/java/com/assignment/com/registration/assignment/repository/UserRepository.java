@@ -6,6 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/**
+ * This Interface responsible for saving email user to database
+ * @author Vaishnavi Bagal
+ * @version 1.0
+ */
+
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 }

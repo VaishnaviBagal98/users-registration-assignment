@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@Slf4j
 public class UserRegistrationService {
 
     @Autowired
@@ -22,6 +23,7 @@ public class UserRegistrationService {
     private ApplicationContext applicationContext;
 
     public User registerUser(User user) {
+        log.info("Inside the UserRegistrationService");
         User createduser = userRepository.save(user);
         UserService userService;
         try {
@@ -31,6 +33,7 @@ public class UserRegistrationService {
         }
 
         userService.sendWelcomeEmail(user);
+        
 
         return createduser;
     }

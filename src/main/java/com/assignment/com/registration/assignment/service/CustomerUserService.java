@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * This class holds all the operation w.r.t Admin user
+ * This class holds all the operation w.r.t Customer user
  * @author Vaishnavi Bagal
  * @version 1.0
  */
 
 @Service("Customer")
+@Slf4j
 public class CustomerUserService implements UserService {
 
     @Autowired
@@ -20,6 +21,7 @@ public class CustomerUserService implements UserService {
 
     @Override
     public void sendWelcomeEmail(User user) {
+        log.info("Inside the CustomerUserService");
         EmailRequest emailRequest = EmailRequest.builder()
                 .to(user.getEmail())
                 .from("vaishnavibagal1998@gmail.com")

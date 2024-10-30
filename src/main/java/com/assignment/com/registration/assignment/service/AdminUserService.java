@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service("Admin")
+@Slf4j
 public class AdminUserService implements UserService {
 
     @Autowired
@@ -20,6 +21,7 @@ public class AdminUserService implements UserService {
 
     @Override
     public void sendWelcomeEmail(User user) {
+        log.info("Inside the AdminUserService");
         EmailRequest emailRequest = EmailRequest.builder()
                 .to(user.getEmail())
                 .from("vaishnavibagal1998@gmail.com")

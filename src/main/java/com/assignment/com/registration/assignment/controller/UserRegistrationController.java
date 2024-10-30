@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Vaishnavi Bagal
+ * @version 1.0
+ */
+
 @RestController
 @RequestMapping("/api/users")
 @Slf4j
@@ -20,7 +25,7 @@ public class UserRegistrationController {
 
     @PostMapping("/register")
     public User registerUser(@Valid @RequestBody User user) {
-        log.info("Inside the UserRegistrationService");
+        log.info("Registration process started");
         return userRegistrationService.registerUser(user);
     }
 }

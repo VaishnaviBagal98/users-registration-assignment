@@ -6,6 +6,8 @@ import com.assignment.com.registration.assignment.postgres.repository.UserReposi
 import com.assignment.com.registration.assignment.service.UserService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +27,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/metadata/{userId}")
-//    @Cacheable(value = "userMetaData",key="#userId")
+    @Cacheable(value = "userMetaData",key="#userId")
     public ResponseEntity<UserMetaData> getUserMetaData(@NotNull @PathVariable("userId") String userId){
             return ResponseEntity.ok(userService.getUserMetaData(userId));
     }
@@ -47,6 +49,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @CachePut(value = "userMetaData",key="#userId")
     public ResponseEntity<User> updateItem(@PathVariable UUID id, @RequestBody User userDetails) {
         Optional<User> optionalItem = userRepository.findById(id);
         if (optionalItem.isPresent()) {
@@ -61,6 +64,7 @@ public class UserController {
         }
     }
 
+    @CacheEvict(value = "userMetaData",key="#userId")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable UUID id) {
         if (userRepository.existsById(id)) {

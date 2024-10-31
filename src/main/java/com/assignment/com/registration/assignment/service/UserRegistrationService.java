@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class holds all type of user registration
@@ -30,7 +31,7 @@ public class UserRegistrationService {
     @Autowired
     private ApplicationContext applicationContext;
 
-//    @Transactional(value = "chainedTransactionManager")
+    @Transactional(value = "chainedTransactionManager")
     public User registerUser(RegisterUserDto registerUserDto) {
 
         RegistrationService registrationService;

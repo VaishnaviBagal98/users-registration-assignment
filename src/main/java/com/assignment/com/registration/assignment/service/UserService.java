@@ -16,7 +16,6 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-@CacheConfig(cacheNames = "userMetaData")
 public class UserService {
 
     @Autowired
@@ -29,7 +28,6 @@ public class UserService {
         return userRepository.findById(UUID.fromString(userId)).get();
     }
 
-    @Cacheable(value = "userMetaData",key="#userId")
     public UserMetaData getUserMetaData(String userId){
         log.info("Start getUserMetaData");
         return userMetaDataRepository.findById(userId).get();

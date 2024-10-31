@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class UserController {
 
     @CacheEvict(value = "userMetaData",key="#userId")
     @DeleteMapping("/{id}")
+    @Secured("ADMIN")
     public ResponseEntity<Void> deleteItem(@PathVariable String id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();

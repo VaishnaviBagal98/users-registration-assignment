@@ -1,5 +1,6 @@
 package com.assignment.com.registration.assignment.controller;
 
+import com.assignment.com.registration.assignment.dto.request.UpdateUserDto;
 import com.assignment.com.registration.assignment.mongoDB.entity.UserMetaData;
 import com.assignment.com.registration.assignment.postgres.entity.User;
 import com.assignment.com.registration.assignment.postgres.repository.UserRepository;
@@ -48,30 +49,16 @@ public class UserController {
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}")
-    @CachePut(value = "userMetaData",key="#userId")
-    public ResponseEntity<User> updateItem(@PathVariable UUID id, @RequestBody User userDetails) {
-        Optional<User> optionalItem = userRepository.findById(id);
-        if (optionalItem.isPresent()) {
-            User user = optionalItem.get();
-            user.setName(userDetails.getName());
-            user.setEmail(userDetails.getEmail());
-            user.setUserType(userDetails.getUserType());
-            user.setPassword(userDetails.getPassword());
-            return ResponseEntity.ok(userRepository.save(user));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping()
+    @CachePut(value = "userMetaData",key="#userDetails.userId")
+    public ResponseEntity<User> updateItem(@RequestBody UpdateUserDto updateUserDto) {
+
     }
 
     @CacheEvict(value = "userMetaData",key="#userId")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteItem(@PathVariable UUID id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteItem(@PathVariable String id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

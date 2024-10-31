@@ -33,6 +33,6 @@ example:Registration Emails,Third-Party Integration
 - **Docker**
 - 
 ## Installation
-1.Clone the repository:
+- Clone the repository:
 https://github.com/VaishnaviBagal98/users-registration-assignment.git
-2.Install the dependencies using:  **mvn install** command
+- Install the dependencies using:  **mvn install** command

@@ -52,7 +52,7 @@ public class UserController {
     @PutMapping()
     @CachePut(value = "userMetaData",key="#userDetails.userId")
     public ResponseEntity<User> updateItem(@RequestBody UpdateUserDto updateUserDto) {
-
+        return ResponseEntity.ok(userService.updateUser(updateUserDto));
     }
 
     @CacheEvict(value = "userMetaData",key="#userId")

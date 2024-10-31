@@ -56,7 +56,7 @@ public class UserService {
     }
 
     @Transactional(value = "chainedTransactionManager")
-    public void updateUser(UpdateUserDto updateUserDto){
+    public User updateUser(UpdateUserDto updateUserDto){
         Optional<User> existingUser = userRepository.findById(UUID.fromString(updateUserDto.getId()));
         if (existingUser.isPresent()) {
             User user = existingUser.get();
@@ -81,6 +81,7 @@ public class UserService {
         } else {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
         }
+        return userRepository.findById(UUID.fromString(updateUserDto.getId())).get();
     }
 
 

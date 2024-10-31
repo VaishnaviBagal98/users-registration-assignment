@@ -32,7 +32,7 @@ example:Registration Emails,Third-Party Integration
 - **MongoDB**
 - **Spring scheduler**
 - **Docker**
-- 
+  
 ## Installation
 - Clone the repository:
 https://github.com/VaishnaviBagal98/users-registration-assignment.git

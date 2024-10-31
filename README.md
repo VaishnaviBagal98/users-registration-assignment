@@ -7,8 +7,6 @@ requiring significant refactoring or changes to the system.
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Testing](#testing)
 
 ## Features
 
@@ -33,3 +31,8 @@ example:Registration Emails,Third-Party Integration
 - **MongoDB**
 - **Spring scheduler**
 - **Docker**
+- 
+## Installation
+1.Clone the repository:
+https://github.com/VaishnaviBagal98/users-registration-assignment.git
+2.Install the dependencies using:  **mvn install** command

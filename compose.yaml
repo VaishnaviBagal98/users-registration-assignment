@@ -1,0 +1,52 @@
+services:
+  mongo1:
+    image: mongo:6
+    hostname: mongo1
+    container_name: mongo1
+    ports:
+      - 27018:27017
+    entrypoint: ["mongod", "--replSet", "myReplicaSet", "--bind_ip", "localhost,mongo1"]
+  mongo2:
+    image: mongo:6
+    hostname: mongo2
+    container_name: mongo2
+    ports:
+      - 27019:27017
+    entrypoint: ["mongod", "--replSet", "myReplicaSet", "--bind_ip", "localhost,mongo2"]
+  db:
+    image: postgres:14-alpine
+    ports:
+      - 5433:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=registration
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+  mongosetup:
+    image: mongo:6
+    depends_on:
+      - mongo1
+      - mongo2
+    volumes:
+      - ./:/scripts
+    restart: "no"
+    entrypoint: [ "bash", "/scripts/mongo_setup.sh"]
+  webservice:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongosetup
+      - db
+      - cache
+    ports:
+      - 8080:8080

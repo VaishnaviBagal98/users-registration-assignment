@@ -14,9 +14,16 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * @author Vaishnavi Bagal
+ * @version 1.0
+ */
+
 @Service
 @Slf4j
 public class RateLimitingService implements Filter {
+
+    log.info("RateLimitingService started");
 
     private static final int MAX_REQUESTS_PER_MINUTE = 5;
     private final Map<String, AtomicInteger> requestCountsPerIpAddress = new ConcurrentHashMap<>();

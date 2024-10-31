@@ -13,8 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Vaishnavi Bagal
+ * @version 1.0
+ */
+
 @RequestMapping("/auth")
 @RestController
+@Slf4j
 public class AuthenticationController {
     private final JwtService jwtService;
 
@@ -28,6 +34,7 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
         User registeredUser = authenticationService.signup(registerUserDto);
+        log.info("Signup process started");
         return ResponseEntity.ok(registeredUser);
     }
 
@@ -41,7 +48,7 @@ public class AuthenticationController {
                 .token(jwtToken)
                 .expiresIn(jwtService.getExpirationTime())
                 .build();
-
+        log.info("Login process started");
         return ResponseEntity.ok(loginResponse);
     }
 }

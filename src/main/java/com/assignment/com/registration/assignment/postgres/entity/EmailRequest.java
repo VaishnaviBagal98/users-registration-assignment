@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 /**
- *
+ * @author Vaishnavi Bagal
+ * @version 1.0
  */
+
 @Entity
 @Data
 @Builder

@@ -17,6 +17,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Vaishnavi Bagal
+ * @version 1.0
+ */
+
 @Entity(name = "user_data")
 @Data
 @Builder

@@ -15,8 +15,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * @author Vaishnavi Bagal
+ * @version 1.0
+ */
+
 @Service
+@Slf4j
 public class JwtService {
+
+    log.info("JwtService started");
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 

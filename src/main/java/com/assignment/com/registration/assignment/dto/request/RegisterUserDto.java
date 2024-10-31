@@ -4,6 +4,11 @@ import lombok.Data;
 import java.util.HashMap;
 
 
+/**
+ * @author Vaishnavi Bagal
+ * @version 1.0
+ */
+
 @Data
 public class RegisterUserDto {
     private String email;

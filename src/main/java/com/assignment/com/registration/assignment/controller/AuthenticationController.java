@@ -3,7 +3,7 @@ package com.assignment.com.registration.assignment.controller;
 import com.assignment.com.registration.assignment.dto.request.LoginUserDto;
 import com.assignment.com.registration.assignment.dto.request.RegisterUserDto;
 import com.assignment.com.registration.assignment.dto.response.LoginResponse;
-import com.assignment.com.registration.assignment.entity.User;
+import com.assignment.com.registration.assignment.postgres.entity.User;
 import com.assignment.com.registration.assignment.service.AuthenticationService;
 import com.assignment.com.registration.assignment.service.JwtService;
 import org.springframework.http.ResponseEntity;

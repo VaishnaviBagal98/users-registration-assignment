@@ -1,6 +1,6 @@
 package com.assignment.com.registration.assignment.service;
 
-import com.assignment.com.registration.assignment.repository.EmailRequestRepository;
+import com.assignment.com.registration.assignment.postgres.repository.EmailRequestRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -26,7 +26,7 @@ public class EmailService {
 
     @Scheduled(fixedDelay = 1000)
     public void sendMail() {
-        log.info("Checking for email requests");
+//        log.info("Checking for email requests");
         emailRequestRepository.findAllEligibleRequest().forEach(
                 emailRequest -> {
                     try {

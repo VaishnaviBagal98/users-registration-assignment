@@ -1,17 +1,38 @@
 package com.assignment.com.registration.assignment.service;
 
-import com.assignment.com.registration.assignment.entity.User;
+import com.assignment.com.registration.assignment.mongoDB.entity.UserMetaData;
+import com.assignment.com.registration.assignment.mongoDB.repository.UserMetaDataRepository;
+import com.assignment.com.registration.assignment.postgres.entity.User;
+import com.assignment.com.registration.assignment.postgres.repository.UserRepository;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.NotFound;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
-/**
- * @author Vaishnavi Bagal
- * @version 1.0
- */
+import java.util.UUID;
 
-public interface UserService {
+@Service
+@Slf4j
+@CacheConfig(cacheNames = "userMetaData")
+public class UserService {
 
-    void sendWelcomeEmail(User user);
+    @Autowired
+    UserRepository userRepository;
 
-    void syncToCRM(User user);
+    @Autowired
+    UserMetaDataRepository userMetaDataRepository;
 
-    void thirdPartySystem(User user);
+    public User getUserDetail(String userId){
+        return userRepository.findById(UUID.fromString(userId)).get();
+    }
+
+    @Cacheable(value = "userMetaData",key="#userId")
+    public UserMetaData getUserMetaData(String userId){
+        log.info("Start getUserMetaData");
+        return userMetaDataRepository.findById(userId).get();
+    }
+
 }

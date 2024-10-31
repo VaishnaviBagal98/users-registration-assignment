@@ -1,6 +1,6 @@
-package com.assignment.com.registration.assignment.repository;
+package com.assignment.com.registration.assignment.postgres.repository;
 
-import com.assignment.com.registration.assignment.entity.EmailRequest;
+import com.assignment.com.registration.assignment.postgres.entity.EmailRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

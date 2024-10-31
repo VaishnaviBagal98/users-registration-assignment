@@ -1,4 +1,4 @@
-package com.assignment.com.registration.assignment.entity;
+package com.assignment.com.registration.assignment.postgres.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

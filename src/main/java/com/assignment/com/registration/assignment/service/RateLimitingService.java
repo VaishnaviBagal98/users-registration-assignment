@@ -45,9 +45,9 @@ public class RateLimitingService implements Filter {
 
     @Scheduled(fixedRate = 10000)
     public void resetCount() {
-        log.info("Starting limit reset");
+//        log.info("Starting limit reset");
         requestCountsPerIpAddress.clear();
-        log.info("End limit reset");
+//        log.info("End limit reset");
     }
 }
 

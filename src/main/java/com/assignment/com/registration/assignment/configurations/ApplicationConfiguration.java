@@ -1,6 +1,6 @@
 package com.assignment.com.registration.assignment.configurations;
 
-import com.assignment.com.registration.assignment.repository.UserRepository;
+import com.assignment.com.registration.assignment.postgres.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

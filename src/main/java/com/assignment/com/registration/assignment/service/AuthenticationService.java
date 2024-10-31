@@ -2,8 +2,8 @@ package com.assignment.com.registration.assignment.service;
 
 import com.assignment.com.registration.assignment.dto.request.LoginUserDto;
 import com.assignment.com.registration.assignment.dto.request.RegisterUserDto;
-import com.assignment.com.registration.assignment.entity.User;
-import com.assignment.com.registration.assignment.repository.UserRepository;
+import com.assignment.com.registration.assignment.postgres.entity.User;
+import com.assignment.com.registration.assignment.postgres.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,22 +17,22 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
+    private final UserRegistrationService userRegistrationService;
+
     public AuthenticationService(
             UserRepository userRepository,
             AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder, UserRegistrationService userRegistrationService
     ) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userRegistrationService = userRegistrationService;
     }
 
-    public User signup(RegisterUserDto input) {
-        User user = new User();
-        user.setName(input.getFullName());
-        user.setEmail(input.getEmail());
-        user.setPassword(passwordEncoder.encode(input.getPassword()));
-        return userRepository.save(user);
+    public User signup(RegisterUserDto registerUserDto) {
+        registerUserDto.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
+        return userRegistrationService.registerUser(registerUserDto);
     }
 
     public User authenticate(LoginUserDto input) {

@@ -23,7 +23,7 @@ class UserRegistrationServiceTest {
     private ApplicationContext applicationContext;
 
     @Mock
-    private UserService userService; // Mocked UserService to simulate sending emails
+    private UserService registrationService; // Mocked UserService to simulate sending emails
 
     private User user;
 
@@ -40,14 +40,14 @@ class UserRegistrationServiceTest {
     void testRegisterUser_Success() {
         // Arrange
         when(userRepository.save(any(User.class))).thenReturn(user);
-        when(applicationContext.getBean(user.getUserType())).thenReturn(userService);
+        when(applicationContext.getBean(user.getUserType())).thenReturn(registrationService);
 
         // Act
         User registeredUser = userRegistrationService.registerUser(user);
 
         // Assert
         verify(userRepository).save(user);
-        verify(userService).sendWelcomeEmail(user);
+        verify(registrationService).sendWelcomeEmail(user);
         assert registeredUser.equals(user);
     }
 
@@ -65,6 +65,6 @@ class UserRegistrationServiceTest {
         }
 
         verify(userRepository).save(user);
-        verify(userService, never()).sendWelcomeEmail(user); // Ensure email is not sent
+        verify(registrationService, never()).sendWelcomeEmail(user); // Ensure email is not sent
     }
 }

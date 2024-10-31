@@ -1,13 +1,15 @@
-package com.assignment.com.registration.assignment.entity;
+package com.assignment.com.registration.assignment.postgres.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +19,10 @@ import java.util.UUID;
 
 @Entity(name = "user_data")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"email"})})
 public class User implements UserDetails {
 
     @Id
@@ -27,7 +33,9 @@ public class User implements UserDetails {
     @Length(min = 1, message = "Name cannot be blank")
     private String name;
 
+
     @Email(message = "Please provide a valid email address")
+    @Column(unique=true)
     private String email;
 
     @NotNull(message = "User type is mandatory")
@@ -35,7 +43,9 @@ public class User implements UserDetails {
     private String userType;
 
     @NotNull(message = "Password is mandatory")
+    @JsonIgnore
     private String password;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

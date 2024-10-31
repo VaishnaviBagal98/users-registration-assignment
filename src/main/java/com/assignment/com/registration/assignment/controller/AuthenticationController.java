@@ -6,6 +6,7 @@ import com.assignment.com.registration.assignment.dto.response.LoginResponse;
 import com.assignment.com.registration.assignment.postgres.entity.User;
 import com.assignment.com.registration.assignment.service.AuthenticationService;
 import com.assignment.com.registration.assignment.service.JwtService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
